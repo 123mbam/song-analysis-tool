@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decode Your Musical Taste</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Archivo', -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+
+        /* Left Panel - Burnt Sienna */
+        .left-panel {
+            background: #E97451;
+            color: #fff;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .header .date {
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .divider {
+            height: 1px;
+            background: #fff;
+            width: 100%;
+        }
+
+        .content-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .content-section h2 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .content-section p {
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 1.6;
+            letter-spacing: 0.2px;
+        }
+
+        /* Right Panel - Typographic Pattern */
+        .right-panel {
+            background: #f5f5f0;
+            overflow: hidden;
+            position: relative;
+            padding: 40px;
+        }
+
+        .typography-pattern {
+            font-family: 'Archivo', sans-serif;
+            line-height: 1.1;
+            overflow: hidden;
+            color: #191970;
+        }
+
+        .type-line {
+            white-space: nowrap;
+            margin-bottom: 2px;
+            font-size: 32px;
+            letter-spacing: -1px;
+        }
+
+        /* Varying typography styles */
+        .type-line:nth-child(1) { font-weight: 700; font-style: normal; }
+        .type-line:nth-child(2) { font-weight: 400; font-style: italic; letter-spacing: 0px; }
+        .type-line:nth-child(3) { font-weight: 800; font-style: italic; }
+        .type-line:nth-child(4) { font-weight: 500; font-style: italic; }
+        .type-line:nth-child(5) { font-weight: 600; font-style: italic; }
+        .type-line:nth-child(6) { font-weight: 700; font-style: italic; }
+        .type-line:nth-child(7) { font-weight: 800; font-style: italic; }
+        .type-line:nth-child(8) { font-weight: 700; font-style: italic; }
+        .type-line:nth-child(9) { font-weight: 600; font-style: italic; }
+        .type-line:nth-child(10) { font-weight: 700; font-style: italic; }
+        .type-line:nth-child(11) { font-weight: 600; font-style: italic; }
+        .type-line:nth-child(12) { font-weight: 500; font-style: italic; }
+        .type-line:nth-child(13) { font-weight: 400; font-style: italic; letter-spacing: 1px; }
+        .type-line:nth-child(14) { font-weight: 300; font-style: italic; letter-spacing: 2px; }
+        .type-line:nth-child(15) { font-weight: 700; font-style: italic; }
+        .type-line:nth-child(16) { font-weight: 800; font-style: normal; }
+        .type-line:nth-child(17) { font-weight: 900; font-style: normal; }
+        .type-line:nth-child(18) { font-weight: 800; font-style: normal; }
+        .type-line:nth-child(19) { font-weight: 700; font-style: italic; }
+        .type-line:nth-child(20) { font-weight: 800; font-style: italic; }
+        .type-line:nth-child(21) { font-weight: 900; font-style: italic; }
+        .type-line:nth-child(22) { font-weight: 800; font-style: italic; }
+        .type-line:nth-child(23) { font-weight: 900; font-style: italic; }
+        .type-line:nth-child(24) { font-weight: 900; font-style: italic; }
+        .type-line:nth-child(25) { font-weight: 900; font-style: italic; }
+
+        /* Text variations with different opacity */
+        .type-line .light {
+            font-weight: 300;
+            opacity: 0.4;
+        }
+
+        .type-line .regular {
+            font-weight: 400;
+            opacity: 0.5;
+        }
+
+        .type-line .medium {
+            font-weight: 500;
+            opacity: 0.6;
+        }
+
+        .type-line .semibold {
+            font-weight: 600;
+            opacity: 0.7;
+        }
+
+        .type-line .bold {
+            font-weight: 700;
+            opacity: 0.85;
+        }
+
+        .type-line .extrabold {
+            font-weight: 800;
+            opacity: 0.95;
+        }
+
+        .type-line .black {
+            font-weight: 900;
+            opacity: 1;
+        }
+
+        /* Scrolling Animation */
+        .type-line {
+            animation: scroll-left 5s linear infinite;
+            will-change: transform;
+        }
+
+        /* Stagger the animation for each line */
+        .type-line:nth-child(1) { animation-duration: 4.5s; }
+        .type-line:nth-child(2) { animation-duration: 5.5s; }
+        .type-line:nth-child(3) { animation-duration: 4.75s; }
+        .type-line:nth-child(4) { animation-duration: 5.25s; }
+        .type-line:nth-child(5) { animation-duration: 5s; }
+        .type-line:nth-child(6) { animation-duration: 5.75s; }
+        .type-line:nth-child(7) { animation-duration: 4.25s; }
+        .type-line:nth-child(8) { animation-duration: 6s; }
+        .type-line:nth-child(9) { animation-duration: 4.75s; }
+        .type-line:nth-child(10) { animation-duration: 5.5s; }
+        .type-line:nth-child(11) { animation-duration: 5s; }
+        .type-line:nth-child(12) { animation-duration: 5.25s; }
+        .type-line:nth-child(13) { animation-duration: 4.5s; }
+        .type-line:nth-child(14) { animation-duration: 5.75s; }
+        .type-line:nth-child(15) { animation-duration: 4.75s; }
+        .type-line:nth-child(16) { animation-duration: 6.25s; }
+        .type-line:nth-child(17) { animation-duration: 4.5s; }
+        .type-line:nth-child(18) { animation-duration: 5.5s; }
+        .type-line:nth-child(19) { animation-duration: 5s; }
+        .type-line:nth-child(20) { animation-duration: 6s; }
+        .type-line:nth-child(21) { animation-duration: 5.25s; }
+        .type-line:nth-child(22) { animation-duration: 4.75s; }
+        .type-line:nth-child(23) { animation-duration: 5.75s; }
+        .type-line:nth-child(24) { animation-duration: 5s; }
+        .type-line:nth-child(25) { animation-duration: 5.5s; }
+
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-25%);
+            }
+        }
+
+        @keyframes scroll-left {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-25%);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .right-panel {
+                min-height: 400px;
+            }
+
+            .type-line {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .left-panel {
+                padding: 40px 30px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .type-line {
+                font-size: 18px;
+            }
+        }
+
+        /* Input field styles */
+        .song-input {
+            width: 100%;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-family: 'Archivo', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .song-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+        }
+
+        .song-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .song-input:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Analyze button styles */
+        .analyze-button {
+            width: 100%;
+            padding: 14px 16px;
+            margin-top: 8px;
+            border: 2px solid #fff;
+            background: #fff;
+            color: #E97451;
+            font-family: 'Archivo', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .analyze-button:hover {
+            background: transparent;
+            color: #fff;
+        }
+
+        .analyze-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading indicator - Audio waveform */
+        .waveform-container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            height: 60px;
+            margin: 20px 0;
+        }
+
+        .waveform-container.active {
+            display: flex;
+        }
+
+        .waveform-bar {
+            width: 6px;
+            background: #fff;
+            border-radius: 3px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+
+        .waveform-bar:nth-child(1) { animation-delay: 0s; }
+        .waveform-bar:nth-child(2) { animation-delay: 0.1s; }
+        .waveform-bar:nth-child(3) { animation-delay: 0.2s; }
+        .waveform-bar:nth-child(4) { animation-delay: 0.3s; }
+        .waveform-bar:nth-child(5) { animation-delay: 0.4s; }
+        .waveform-bar:nth-child(6) { animation-delay: 0.3s; }
+        .waveform-bar:nth-child(7) { animation-delay: 0.2s; }
+        .waveform-bar:nth-child(8) { animation-delay: 0.1s; }
+
+        @keyframes wave {
+            0%, 100% {
+                height: 10px;
+                opacity: 0.3;
+            }
+            50% {
+                height: 50px;
+                opacity: 1;
+            }
+        }
+
+        /* Radar chart container */
+        #radarChartContainer {
+            display: none;
+        }
+
+        #radarChartContainer.active {
+            display: block;
+        }
+
+        #radarChart {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="header">
+                <h1>Decode Your Musical Taste</h1>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="content-section">
+                <h2>the songs you like (up to 3)</h2>
+                <input type="text" class="song-input" id="song1" placeholder="Song 1 - Artist Name">
+                <input type="text" class="song-input" id="song2" placeholder="Song 2 - Artist Name">
+                <input type="text" class="song-input" id="song3" placeholder="Song 3 - Artist Name">
+                <button class="analyze-button" id="analyzeBtn">analyze</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="content-section">
+                <h2>Musical Qualities Radar Chart</h2>
+
+                <!-- Loading indicator -->
+                <div class="waveform-container" id="loadingIndicator">
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                    <div class="waveform-bar"></div>
+                </div>
+
+                <!-- Radar chart -->
+                <div id="radarChartContainer">
+                    <canvas id="radarChart" width="600" height="600"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Typography Pattern -->
+<div class="right-panel">
+            <div class="typography-pattern">
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="semibold">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="semibold">SOUNDS</span><span class="light">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="semibold">SOUNDS</span><span class="medium">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="semibold">SOUNDS</span><span class="medium">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="semibold">SOUNDS</span><span class="medium">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="semibold">SOUNDS</span><span class="medium">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="medium">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDS</span><span class="medium">LIKE</span><span class="bold">THIS SONG</span><span class="medium">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDS</span><span class="medium">LIKE</span></div>
+                <div class="type-line"><span class="bold">THIS SONG</span><span class="medium">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="black">THIS SONG</span><span class="black">SOUNDS</span><span class="semibold">LIKE</span><span class="bold">THIS SONG</span><span class="medium">SOUNDS</span><span class="light">LIKE</span><span class="extrabold">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="black">THIS SONG</span><span class="black">SOUNDS</span><span class="semibold">LIKE</span></div>
+                <div class="type-line"><span class="extrabold">THIS SONG</span><span class="medium">SOUNDS</span><span class="light">LIKE</span><span class="black">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="black">THIS SONG</span><span class="black">SOUNDS</span><span class="semibold">LIKE</span><span class="extrabold">THIS SONG</span><span class="medium">SOUNDS</span><span class="light">LIKE</span><span class="black">THIS SONG</span><span class="black">SOUNDSLIKE</span><span class="black">THIS SONG</span><span class="black">SOUNDS</span><span class="semibold">LIKE</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Config file with API key -->
+    <script src="config.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const radarChartContainer = document.getElementById('radarChartContainer');
+
+        analyzeBtn.addEventListener('click', async () => {
+            const song1 = document.getElementById('song1').value.trim();
+            const song2 = document.getElementById('song2').value.trim();
+            const song3 = document.getElementById('song3').value.trim();
+
+            if (!song1 || !song2) {
+                alert('Please enter at least two songs');
+                return;
+            }
+
+            // Show loading, hide chart
+            analyzeBtn.disabled = true;
+            loadingIndicator.classList.add('active');
+            radarChartContainer.classList.remove('active');
+
+            try {
+                const analysis = await analyzeSongs(song1, song2, song3);
+                drawRadarChart(analysis);
+
+                // Hide loading, show chart
+                loadingIndicator.classList.remove('active');
+                radarChartContainer.classList.add('active');
+            } catch (error) {
+                alert('Error analyzing songs: ' + error.message);
+                loadingIndicator.classList.remove('active');
+            } finally {
+                analyzeBtn.disabled = false;
+            }
+        });
+
+        async function analyzeSongs(song1, song2, song3) {
+            const songs = song3 ? [song1, song2, song3] : [song1, song2];
+
+            const prompt = `Analyze the following songs based on these 10 musical qualities:
+1. Melody
+2. Form/Structure
+3. Timbre
+4. Texture
+5. Key
+6. Time Signature
+7. Chord Quality
+8. Genre/Style
+9. Lyrics
+10. Spatial Effects
+
+Songs to analyze:
+${songs.map((song, i) => `${i + 1}. ${song}`).join('\n')}
+
+For each song, rate each quality on a scale of 0-10 where:
+- 0 means the quality is absent or minimal
+- 10 means the quality is highly prominent or intense
+
+Return ONLY a valid JSON object in this exact format (no markdown, no explanation):
+{
+  "songs": [
+    {
+      "name": "Song 1 name",
+      "data": [melody_score, form_score, timbre_score, texture_score, key_score, time_sig_score, chord_score, genre_score, lyrics_score, spatial_score]
+    },
+    {
+      "name": "Song 2 name",
+      "data": [...]
+    }${song3 ? `,
+    {
+      "name": "Song 3 name",
+      "data": [...]
+    }` : ''}
+  ]
+}`;
+
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': CONFIG.ANTHROPIC_API_KEY,
+                    'anthropic-version': '2023-06-01'
+                },
+                body: JSON.stringify({
+                    model: 'claude-3-5-sonnet-20241022',
+                    max_tokens: 1024,
+                    messages: [{
+                        role: 'user',
+                        content: prompt
+                    }]
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API request failed: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            const content = data.content[0].text;
+
+            // Parse JSON response
+            return JSON.parse(content);
+        }
+
+        function drawRadarChart(analysis) {
+            const canvas = document.getElementById('radarChart');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 230;
+
+            const qualities = [
+                'Melody',
+                'Form/Structure',
+                'Timbre',
+                'Texture',
+                'Key',
+                'Time Signature',
+                'Chord Quality',
+                'Genre/Style',
+                'Lyrics',
+                'Spatial Effects'
+            ];
+
+            const numQualities = qualities.length;
+            const angleStep = (Math.PI * 2) / numQualities;
+
+            const colors = [
+                { line: '#f97316', fill: 'rgba(249, 115, 22, 0.25)' },
+                { line: '#0ea5e9', fill: 'rgba(14, 165, 233, 0.25)' },
+                { line: '#10b981', fill: 'rgba(16, 185, 129, 0.25)' }
+            ];
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw background circles
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 5; i++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, (radius / 5) * i, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            // Draw axes
+            ctx.strokeStyle = '#ccc';
+            for (let i = 0; i < numQualities; i++) {
+                const angle = angleStep * i - Math.PI / 2;
+                const x = centerX + Math.cos(angle) * radius;
+                const y = centerY + Math.sin(angle) * radius;
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+
+            // Draw labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Archivo, sans-serif';
+            ctx.fontWeight = '600';
+
+            for (let i = 0; i < numQualities; i++) {
+                const angle = angleStep * i - Math.PI / 2;
+                const labelDistance = radius + 35;
+                const x = centerX + Math.cos(angle) * labelDistance;
+                const y = centerY + Math.sin(angle) * labelDistance;
+
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                if (Math.abs(x - centerX) < 20) {
+                    ctx.textAlign = 'center';
+                } else if (x > centerX) {
+                    ctx.textAlign = 'left';
+                } else {
+                    ctx.textAlign = 'right';
+                }
+
+                ctx.fillText(qualities[i], 0, 0);
+                ctx.restore();
+            }
+
+            // Draw data for each song
+            analysis.songs.forEach((song, songIndex) => {
+                ctx.beginPath();
+                ctx.fillStyle = colors[songIndex].fill;
+                ctx.strokeStyle = colors[songIndex].line;
+                ctx.lineWidth = 2.5;
+
+                for (let i = 0; i < numQualities; i++) {
+                    const angle = angleStep * i - Math.PI / 2;
+                    const value = song.data[i];
+                    const distance = (value / 10) * radius;
+                    const x = centerX + Math.cos(angle) * distance;
+                    const y = centerY + Math.sin(angle) * distance;
+
+                    if (i === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                }
+
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw points
+                ctx.fillStyle = colors[songIndex].line;
+                for (let i = 0; i < numQualities; i++) {
+                    const angle = angleStep * i - Math.PI / 2;
+                    const value = song.data[i];
+                    const distance = (value / 10) * radius;
+                    const x = centerX + Math.cos(angle) * distance;
+                    const y = centerY + Math.sin(angle) * distance;
+
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            // Draw scale labels
+            ctx.fillStyle = '#999';
+            ctx.font = '10px Archivo, sans-serif';
+            ctx.textAlign = 'right';
+            for (let i = 1; i <= 5; i++) {
+                const value = (i * 2).toString();
+                ctx.fillText(value, centerX - 10, centerY - (radius / 5) * i + 4);
+            }
+        }
+    </script>
+</body>
+</html>
