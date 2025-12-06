@@ -38,20 +38,25 @@ For each song, rate each quality on a scale of 0-10 where:
 - 0 means the quality is absent or minimal
 - 10 means the quality is highly prominent or intense
 
+Also provide a brief description (5-10 words) for each quality.
+
 Return ONLY a valid JSON object in this exact format (no markdown, no explanation):
 {
   "songs": [
     {
       "name": "Song 1 name",
-      "data": [melody_score, form_score, timbre_score, texture_score, key_score, time_sig_score, chord_score, genre_score, lyrics_score, spatial_score]
+      "data": [melody_score, form_score, timbre_score, texture_score, key_score, time_sig_score, chord_score, genre_score, lyrics_score, spatial_score],
+      "descriptions": ["melody description", "form description", "timbre description", "texture description", "key description", "time sig description", "chord description", "genre description", "lyrics description", "spatial description"]
     },
     {
       "name": "Song 2 name",
-      "data": [...]
+      "data": [...],
+      "descriptions": [...]
     }${songs.length > 2 ? `,
     {
       "name": "Song 3 name",
-      "data": [...]
+      "data": [...],
+      "descriptions": [...]
     }` : ''}
   ]
 }`;

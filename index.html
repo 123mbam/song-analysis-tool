@@ -673,9 +673,15 @@
             const table = document.getElementById('comparisonTable');
             let tableHTML = '<thead><tr><th>Quality</th>';
 
-            // Add song name headers
+            // Add song name headers (score + description columns for each song)
             analysis.songs.forEach(song => {
-                tableHTML += `<th>${song.name}</th>`;
+                tableHTML += `<th colspan="2">${song.name}</th>`;
+            });
+            tableHTML += '</tr><tr><th></th>';
+
+            // Add Score/Description sub-headers
+            analysis.songs.forEach(() => {
+                tableHTML += `<th>Score</th><th>Description</th>`;
             });
             tableHTML += '</tr></thead><tbody>';
 
@@ -684,7 +690,9 @@
                 tableHTML += `<tr><td>${quality}</td>`;
                 analysis.songs.forEach(song => {
                     const score = song.data[index];
+                    const description = song.descriptions ? song.descriptions[index] : '';
                     tableHTML += `<td class="score-cell">${score}/10</td>`;
+                    tableHTML += `<td>${description}</td>`;
                 });
                 tableHTML += '</tr>';
             });
