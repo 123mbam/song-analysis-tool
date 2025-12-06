@@ -439,11 +439,12 @@
 
                 <!-- Radar chart -->
                 <div id="radarChartContainer">
-                    <canvas id="radarChart" width="600" height="600"></canvas>
+                    <canvas id="radarChart" width="700" height="700"></canvas>
 
                     <!-- Comparison table -->
                     <div id="comparisonTableContainer" style="margin-top: 40px;">
-                        <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; color: #fff;">Quality Comparison</h3>
+                        <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; color: #fff;">Quality Comparison</h3>
+                        <p style="font-size: 12px; font-weight: 400; margin-bottom: 20px; color: rgba(255, 255, 255, 0.8); line-height: 1.5;">Score represents the prominence or complexity of each musical quality on a scale of 1-10, where higher values indicate more distinctive or sophisticated use of that element.</p>
                         <table id="comparisonTable"></table>
                     </div>
                 </div>
@@ -562,7 +563,7 @@
             const angleStep = (Math.PI * 2) / numQualities;
 
             const colors = [
-                { line: '#f97316', fill: 'rgba(249, 115, 22, 0.25)' },
+                { line: '#8b5cf6', fill: 'rgba(139, 92, 246, 0.25)' },
                 { line: '#0ea5e9', fill: 'rgba(14, 165, 233, 0.25)' },
                 { line: '#10b981', fill: 'rgba(16, 185, 129, 0.25)' }
             ];
@@ -599,7 +600,7 @@
 
             for (let i = 0; i < numQualities; i++) {
                 const angle = angleStep * i - Math.PI / 2;
-                const labelDistance = radius + 35;
+                const labelDistance = radius + 60;
                 const x = centerX + Math.cos(angle) * labelDistance;
                 const y = centerY + Math.sin(angle) * labelDistance;
 
