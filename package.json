@@ -1,0 +1,8 @@
+{
+  "name": "song-analysis-tool",
+  "version": "1.0.0",
+  "description": "AI-powered song analysis tool using Claude",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  }
+}

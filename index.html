@@ -431,9 +431,6 @@
         </div>
     </div>
 
-    <!-- Config file with API key -->
-    <script src="config.js"></script>
-
     <!-- Main JavaScript -->
     <script>
         const analyzeBtn = document.getElementById('analyzeBtn');
@@ -473,69 +470,21 @@
         async function analyzeSongs(song1, song2, song3) {
             const songs = song3 ? [song1, song2, song3] : [song1, song2];
 
-            const prompt = `Analyze the following songs based on these 10 musical qualities:
-1. Melody
-2. Form/Structure
-3. Timbre
-4. Texture
-5. Key
-6. Time Signature
-7. Chord Quality
-8. Genre/Style
-9. Lyrics
-10. Spatial Effects
-
-Songs to analyze:
-${songs.map((song, i) => `${i + 1}. ${song}`).join('\n')}
-
-For each song, rate each quality on a scale of 0-10 where:
-- 0 means the quality is absent or minimal
-- 10 means the quality is highly prominent or intense
-
-Return ONLY a valid JSON object in this exact format (no markdown, no explanation):
-{
-  "songs": [
-    {
-      "name": "Song 1 name",
-      "data": [melody_score, form_score, timbre_score, texture_score, key_score, time_sig_score, chord_score, genre_score, lyrics_score, spatial_score]
-    },
-    {
-      "name": "Song 2 name",
-      "data": [...]
-    }${song3 ? `,
-    {
-      "name": "Song 3 name",
-      "data": [...]
-    }` : ''}
-  ]
-}`;
-
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
+            // Call the Netlify serverless function
+            const response = await fetch('/.netlify/functions/analyze-songs', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': CONFIG.ANTHROPIC_API_KEY,
-                    'anthropic-version': '2023-06-01'
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    model: 'claude-3-5-sonnet-20241022',
-                    max_tokens: 1024,
-                    messages: [{
-                        role: 'user',
-                        content: prompt
-                    }]
-                })
+                body: JSON.stringify({ songs })
             });
 
             if (!response.ok) {
-                throw new Error(`API request failed: ${response.statusText}`);
+                const errorData = await response.json();
+                throw new Error(errorData.error || `Request failed: ${response.statusText}`);
             }
 
-            const data = await response.json();
-            const content = data.content[0].text;
-
-            // Parse JSON response
-            return JSON.parse(content);
+            return await response.json();
         }
 
         function drawRadarChart(analysis) {

@@ -1,2 +1,12 @@
-# API Configuration - NEVER commit this file
+# Dependencies
+node_modules/
+
+# Netlify
+.netlify/
+
+# Environment variables
+.env
+
+# Old config (no longer needed - using Netlify environment variables)
 config.js
+config.example.js
