@@ -689,11 +689,33 @@
             // Add rows for each quality
             qualities.forEach((quality, index) => {
                 tableHTML += `<tr><td>${quality}</td>`;
+
+                // Collect all scores for this quality to detect shared values
+                const scores = analysis.songs.map(song => song.data[index]);
+
+                // Find which scores are shared (appear more than once)
+                const scoreCounts = {};
+                scores.forEach(score => {
+                    scoreCounts[score] = (scoreCounts[score] || 0) + 1;
+                });
+
+                // Assign highlight colors to shared scores
+                const highlightColors = ['rgba(139, 92, 246, 0.3)', 'rgba(14, 165, 233, 0.3)', 'rgba(16, 185, 129, 0.3)', 'rgba(236, 72, 153, 0.3)'];
+                const sharedScoreColors = {};
+                let colorIndex = 0;
+                Object.keys(scoreCounts).forEach(score => {
+                    if (scoreCounts[score] > 1) {
+                        sharedScoreColors[score] = highlightColors[colorIndex % highlightColors.length];
+                        colorIndex++;
+                    }
+                });
+
                 analysis.songs.forEach(song => {
                     const score = song.data[index];
                     const description = song.descriptions ? song.descriptions[index] : '';
-                    tableHTML += `<td class="score-cell">${score}/10</td>`;
-                    tableHTML += `<td>${description}</td>`;
+                    const bgColor = sharedScoreColors[score] || 'transparent';
+                    tableHTML += `<td class="score-cell" style="background-color: ${bgColor};">${score}/10</td>`;
+                    tableHTML += `<td style="background-color: ${bgColor};">${description}</td>`;
                 });
                 tableHTML += '</tr>';
             });

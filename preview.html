@@ -146,7 +146,7 @@
             songs: [
                 {
                     name: "Blinding Lights - The Weeknd",
-                    data: [8, 7, 9, 7, 8, 6, 8, 9, 7, 8],
+                    data: [8, 7, 9, 7, 8, 8, 8, 9, 7, 8],
                     descriptions: [
                         "Catchy synth-driven melody",
                         "Verse-chorus structure with bridge",
@@ -162,7 +162,7 @@
                 },
                 {
                     name: "Bohemian Rhapsody - Queen",
-                    data: [9, 10, 8, 9, 7, 9, 9, 8, 9, 7],
+                    data: [9, 7, 8, 9, 7, 8, 9, 8, 9, 7],
                     descriptions: [
                         "Complex multi-section melodies",
                         "Through-composed, operatic structure",
@@ -178,7 +178,7 @@
                 },
                 {
                     name: "Shape of You - Ed Sheeran",
-                    data: [7, 6, 7, 6, 7, 5, 6, 8, 8, 6],
+                    data: [7, 7, 7, 6, 7, 8, 6, 8, 8, 6],
                     descriptions: [
                         "Simple, repetitive hook",
                         "Standard verse-chorus form",
@@ -345,11 +345,33 @@
             // Add rows for each quality
             qualities.forEach((quality, index) => {
                 tableHTML += `<tr><td>${quality}</td>`;
+
+                // Collect all scores for this quality to detect shared values
+                const scores = analysis.songs.map(song => song.data[index]);
+
+                // Find which scores are shared (appear more than once)
+                const scoreCounts = {};
+                scores.forEach(score => {
+                    scoreCounts[score] = (scoreCounts[score] || 0) + 1;
+                });
+
+                // Assign highlight colors to shared scores
+                const highlightColors = ['rgba(139, 92, 246, 0.3)', 'rgba(14, 165, 233, 0.3)', 'rgba(16, 185, 129, 0.3)', 'rgba(236, 72, 153, 0.3)'];
+                const sharedScoreColors = {};
+                let colorIndex = 0;
+                Object.keys(scoreCounts).forEach(score => {
+                    if (scoreCounts[score] > 1) {
+                        sharedScoreColors[score] = highlightColors[colorIndex % highlightColors.length];
+                        colorIndex++;
+                    }
+                });
+
                 analysis.songs.forEach(song => {
                     const score = song.data[index];
                     const description = song.descriptions ? song.descriptions[index] : '';
-                    tableHTML += `<td class="score-cell">${score}/10</td>`;
-                    tableHTML += `<td>${description}</td>`;
+                    const bgColor = sharedScoreColors[score] || 'transparent';
+                    tableHTML += `<td class="score-cell" style="background-color: ${bgColor};">${score}/10</td>`;
+                    tableHTML += `<td style="background-color: ${bgColor};">${description}</td>`;
                 });
                 tableHTML += '</tr>';
             });
