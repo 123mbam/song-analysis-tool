@@ -355,6 +355,51 @@
             display: block;
             margin: 0 auto;
         }
+
+        /* Comparison table styles */
+        #comparisonTable {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #comparisonTable th {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 12px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #comparisonTable td {
+            padding: 12px;
+            color: #fff;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #comparisonTable tr:last-child td {
+            border-bottom: none;
+        }
+
+        #comparisonTable tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        #comparisonTable td:first-child {
+            font-weight: 600;
+        }
+
+        .score-cell {
+            text-align: center;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
@@ -395,6 +440,12 @@
                 <!-- Radar chart -->
                 <div id="radarChartContainer">
                     <canvas id="radarChart" width="600" height="600"></canvas>
+
+                    <!-- Comparison table -->
+                    <div id="comparisonTableContainer" style="margin-top: 40px;">
+                        <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; color: #fff;">Quality Comparison</h3>
+                        <table id="comparisonTable"></table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -617,6 +668,29 @@
                 const value = (i * 2).toString();
                 ctx.fillText(value, centerX - 10, centerY - (radius / 5) * i + 4);
             }
+
+            // Populate comparison table
+            const table = document.getElementById('comparisonTable');
+            let tableHTML = '<thead><tr><th>Quality</th>';
+
+            // Add song name headers
+            analysis.songs.forEach(song => {
+                tableHTML += `<th>${song.name}</th>`;
+            });
+            tableHTML += '</tr></thead><tbody>';
+
+            // Add rows for each quality
+            qualities.forEach((quality, index) => {
+                tableHTML += `<tr><td>${quality}</td>`;
+                analysis.songs.forEach(song => {
+                    const score = song.data[index];
+                    tableHTML += `<td class="score-cell">${score}/10</td>`;
+                });
+                tableHTML += '</tr>';
+            });
+
+            tableHTML += '</tbody>';
+            table.innerHTML = tableHTML;
         }
     </script>
 </body>
