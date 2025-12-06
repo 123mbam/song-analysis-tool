@@ -64,7 +64,7 @@ Return ONLY a valid JSON object in this exact format (no markdown, no explanatio
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-3-haiku-20240307',
         max_tokens: 1024,
         messages: [{
           role: 'user',
