@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Decode Your Musical Taste</title>
+    <title>Layout Preview - Scrolling Text on Left</title>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,7 +23,7 @@
             min-height: 100vh;
         }
 
-        /* Left Panel - Burnt Sienna */
+        /* Left Panel - Content */
         .left-panel {
             background: #E97451;
             color: #fff;
@@ -31,59 +31,6 @@
             display: flex;
             flex-direction: column;
             gap: 40px;
-        }
-
-        .header {
-            margin-bottom: 20px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .header .date {
-            font-size: 13px;
-            font-weight: 400;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .divider {
-            height: 1px;
-            background: #fff;
-            width: 100%;
-        }
-
-        .content-section {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .content-section h2 {
-            font-size: 14px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .content-section p {
-            font-size: 13px;
-            font-weight: 400;
-            line-height: 1.6;
-            letter-spacing: 0.2px;
-        }
-
-        /* Right Panel - Typographic Pattern */
-        .right-panel {
-            background: #f5f5f0;
-            overflow: hidden;
-            position: relative;
-            padding: 0;
         }
 
         .typography-pattern {
@@ -95,6 +42,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
+            padding: 0;
         }
 
         .type-line {
@@ -209,13 +157,43 @@
             }
         }
 
-        @keyframes scroll-left {
-            from {
-                transform: translateX(0);
-            }
-            to {
-                transform: translateX(-25%);
-            }
+        /* Right Panel - Typographic Pattern */
+        .right-panel {
+            background: #f5f5f0;
+            overflow: hidden;
+            position: relative;
+            padding: 0;
+        }
+
+        .header {
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .divider {
+            height: 1px;
+            background: #fff;
+            width: 100%;
+        }
+
+        .content-section {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .content-section h2 {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
         /* Responsive */
@@ -246,169 +224,11 @@
                 font-size: 18px;
             }
         }
-
-        /* Input field styles */
-        .song-input {
-            width: 100%;
-            padding: 12px 16px;
-            margin-bottom: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-family: 'Archivo', sans-serif;
-            font-size: 13px;
-            font-weight: 400;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .song-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            font-weight: 300;
-        }
-
-        .song-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .song-input:hover {
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Analyze button styles */
-        .analyze-button {
-            width: 100%;
-            padding: 14px 16px;
-            margin-top: 8px;
-            border: 2px solid #fff;
-            background: #fff;
-            color: #E97451;
-            font-family: 'Archivo', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .analyze-button:hover {
-            background: transparent;
-            color: #fff;
-        }
-
-        .analyze-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Loading indicator - Audio waveform */
-        .waveform-container {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            height: 60px;
-            margin: 20px 0;
-        }
-
-        .waveform-container.active {
-            display: flex;
-        }
-
-        .waveform-bar {
-            width: 6px;
-            background: #fff;
-            border-radius: 3px;
-            animation: wave 1.2s ease-in-out infinite;
-        }
-
-        .waveform-bar:nth-child(1) { animation-delay: 0s; }
-        .waveform-bar:nth-child(2) { animation-delay: 0.1s; }
-        .waveform-bar:nth-child(3) { animation-delay: 0.2s; }
-        .waveform-bar:nth-child(4) { animation-delay: 0.3s; }
-        .waveform-bar:nth-child(5) { animation-delay: 0.4s; }
-        .waveform-bar:nth-child(6) { animation-delay: 0.3s; }
-        .waveform-bar:nth-child(7) { animation-delay: 0.2s; }
-        .waveform-bar:nth-child(8) { animation-delay: 0.1s; }
-
-        @keyframes wave {
-            0%, 100% {
-                height: 10px;
-                opacity: 0.3;
-            }
-            50% {
-                height: 50px;
-                opacity: 1;
-            }
-        }
-
-        /* Radar chart container */
-        #radarChartContainer {
-            display: none;
-        }
-
-        #radarChartContainer.active {
-            display: block;
-        }
-
-        #radarChart {
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* Comparison table styles */
-        #comparisonTable {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        #comparisonTable th {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 12px;
-            text-align: left;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #comparisonTable td {
-            padding: 12px;
-            color: #fff;
-            font-size: 13px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        #comparisonTable tr:last-child td {
-            border-bottom: none;
-        }
-
-        #comparisonTable tr:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        #comparisonTable td:first-child {
-            font-weight: 600;
-        }
-
-        .score-cell {
-            text-align: center;
-            font-weight: 700;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Left Panel -->
+        <!-- Left Panel - Content -->
         <div class="left-panel">
             <div class="header">
                 <h1>Decode Your Musical Taste</h1>
@@ -417,46 +237,23 @@
             <div class="divider"></div>
 
             <div class="content-section">
-                <h2>the songs you like (up to 3)</h2>
-                <input type="text" class="song-input" id="song1" placeholder="Song 1 - Artist Name">
-                <input type="text" class="song-input" id="song2" placeholder="Song 2 - Artist Name">
-                <input type="text" class="song-input" id="song3" placeholder="Song 3 - Artist Name">
-                <button class="analyze-button" id="analyzeBtn">analyze</button>
+                <h2>Preview Note</h2>
+                <p>This preview shows the scrolling typography pattern on the RIGHT side, filling the entire right panel from edge to edge with no padding.</p>
             </div>
 
             <div class="divider"></div>
 
             <div class="content-section">
-                <h2>Musical Qualities Radar Chart</h2>
-
-                <!-- Loading indicator -->
-                <div class="waveform-container" id="loadingIndicator">
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                    <div class="waveform-bar"></div>
-                </div>
-
-                <!-- Radar chart -->
-                <div id="radarChartContainer">
-                    <canvas id="radarChart" width="700" height="700"></canvas>
-
-                    <!-- Comparison table -->
-                    <div id="comparisonTableContainer" style="margin-top: 40px;">
-                        <h3 style="font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; color: #fff;">Quality Comparison</h3>
-                        <p style="font-size: 12px; font-weight: 400; margin-bottom: 20px; color: rgba(255, 255, 255, 0.8); line-height: 1.5;">Score represents the prominence or complexity of each musical quality on a scale of 1-10, where higher values indicate more distinctive or sophisticated use of that element.</p>
-                        <table id="comparisonTable"></table>
-                    </div>
-                </div>
+                <h2>Layout Changes</h2>
+                <p>• Typography pattern fills the entire right side from top to bottom</p>
+                <p>• No padding - extends to all edges</p>
+                <p>• Scrolling animation continues as before</p>
+                <p>• Form inputs and results stay on the left panel</p>
             </div>
         </div>
 
         <!-- Right Panel - Typography Pattern -->
-<div class="right-panel">
+        <div class="right-panel">
             <div class="typography-pattern">
                 <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
                 <div class="type-line"><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span><span class="bold">THIS SONG</span><span class="extrabold">SOUNDSLIKE</span><span class="bold">THIS SONG</span><span class="regular">SOUNDS</span><span class="light">LIKE</span></div>
@@ -486,247 +283,5 @@
             </div>
         </div>
     </div>
-
-    <!-- Main JavaScript -->
-    <script>
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const loadingIndicator = document.getElementById('loadingIndicator');
-        const radarChartContainer = document.getElementById('radarChartContainer');
-
-        analyzeBtn.addEventListener('click', async () => {
-            const song1 = document.getElementById('song1').value.trim();
-            const song2 = document.getElementById('song2').value.trim();
-            const song3 = document.getElementById('song3').value.trim();
-
-            if (!song1 || !song2) {
-                alert('Please enter at least two songs');
-                return;
-            }
-
-            // Show loading, hide chart
-            analyzeBtn.disabled = true;
-            loadingIndicator.classList.add('active');
-            radarChartContainer.classList.remove('active');
-
-            try {
-                const analysis = await analyzeSongs(song1, song2, song3);
-                drawRadarChart(analysis);
-
-                // Hide loading, show chart
-                loadingIndicator.classList.remove('active');
-                radarChartContainer.classList.add('active');
-            } catch (error) {
-                alert('Error analyzing songs: ' + error.message);
-                loadingIndicator.classList.remove('active');
-            } finally {
-                analyzeBtn.disabled = false;
-            }
-        });
-
-        async function analyzeSongs(song1, song2, song3) {
-            const songs = song3 ? [song1, song2, song3] : [song1, song2];
-
-            // Call the Netlify serverless function
-            const response = await fetch('/.netlify/functions/analyze-songs', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ songs })
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || `Request failed: ${response.statusText}`);
-            }
-
-            return await response.json();
-        }
-
-        function drawRadarChart(analysis) {
-            const canvas = document.getElementById('radarChart');
-            const ctx = canvas.getContext('2d');
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
-            const radius = 230;
-
-            const qualities = [
-                'Melody',
-                'Form/Structure',
-                'Timbre',
-                'Texture',
-                'Key',
-                'Time Signature',
-                'Chord Quality',
-                'Genre/Style',
-                'Lyrics',
-                'Spatial Effects'
-            ];
-
-            const numQualities = qualities.length;
-            const angleStep = (Math.PI * 2) / numQualities;
-
-            const colors = [
-                { line: '#8b5cf6', fill: 'rgba(139, 92, 246, 0.25)' },
-                { line: '#0ea5e9', fill: 'rgba(14, 165, 233, 0.25)' },
-                { line: '#10b981', fill: 'rgba(16, 185, 129, 0.25)' }
-            ];
-
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Draw background circles
-            ctx.strokeStyle = '#e0e0e0';
-            ctx.lineWidth = 1;
-            for (let i = 1; i <= 5; i++) {
-                ctx.beginPath();
-                ctx.arc(centerX, centerY, (radius / 5) * i, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-
-            // Draw axes
-            ctx.strokeStyle = '#ccc';
-            for (let i = 0; i < numQualities; i++) {
-                const angle = angleStep * i - Math.PI / 2;
-                const x = centerX + Math.cos(angle) * radius;
-                const y = centerY + Math.sin(angle) * radius;
-
-                ctx.beginPath();
-                ctx.moveTo(centerX, centerY);
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            }
-
-            // Draw labels
-            ctx.fillStyle = '#333';
-            ctx.font = '12px Archivo, sans-serif';
-            ctx.fontWeight = '600';
-
-            for (let i = 0; i < numQualities; i++) {
-                const angle = angleStep * i - Math.PI / 2;
-                const labelDistance = radius + 60;
-                const x = centerX + Math.cos(angle) * labelDistance;
-                const y = centerY + Math.sin(angle) * labelDistance;
-
-                ctx.save();
-                ctx.translate(x, y);
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-
-                if (Math.abs(x - centerX) < 20) {
-                    ctx.textAlign = 'center';
-                } else if (x > centerX) {
-                    ctx.textAlign = 'left';
-                } else {
-                    ctx.textAlign = 'right';
-                }
-
-                ctx.fillText(qualities[i], 0, 0);
-                ctx.restore();
-            }
-
-            // Draw data for each song
-            analysis.songs.forEach((song, songIndex) => {
-                ctx.beginPath();
-                ctx.fillStyle = colors[songIndex].fill;
-                ctx.strokeStyle = colors[songIndex].line;
-                ctx.lineWidth = 2.5;
-
-                for (let i = 0; i < numQualities; i++) {
-                    const angle = angleStep * i - Math.PI / 2;
-                    const value = song.data[i];
-                    const distance = (value / 10) * radius;
-                    const x = centerX + Math.cos(angle) * distance;
-                    const y = centerY + Math.sin(angle) * distance;
-
-                    if (i === 0) {
-                        ctx.moveTo(x, y);
-                    } else {
-                        ctx.lineTo(x, y);
-                    }
-                }
-
-                ctx.closePath();
-                ctx.fill();
-                ctx.stroke();
-
-                // Draw points
-                ctx.fillStyle = colors[songIndex].line;
-                for (let i = 0; i < numQualities; i++) {
-                    const angle = angleStep * i - Math.PI / 2;
-                    const value = song.data[i];
-                    const distance = (value / 10) * radius;
-                    const x = centerX + Math.cos(angle) * distance;
-                    const y = centerY + Math.sin(angle) * distance;
-
-                    ctx.beginPath();
-                    ctx.arc(x, y, 4, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            });
-
-            // Draw scale labels
-            ctx.fillStyle = '#999';
-            ctx.font = '10px Archivo, sans-serif';
-            ctx.textAlign = 'right';
-            for (let i = 1; i <= 5; i++) {
-                const value = (i * 2).toString();
-                ctx.fillText(value, centerX - 10, centerY - (radius / 5) * i + 4);
-            }
-
-            // Populate comparison table
-            const table = document.getElementById('comparisonTable');
-            let tableHTML = '<thead><tr><th>Quality</th>';
-
-            // Add song name headers (score + description columns for each song)
-            analysis.songs.forEach(song => {
-                tableHTML += `<th colspan="2">${song.name}</th>`;
-            });
-            tableHTML += '</tr><tr><th></th>';
-
-            // Add Score/Description sub-headers
-            analysis.songs.forEach(() => {
-                tableHTML += `<th>Score</th><th>Description</th>`;
-            });
-            tableHTML += '</tr></thead><tbody>';
-
-            // Add rows for each quality
-            qualities.forEach((quality, index) => {
-                tableHTML += `<tr><td>${quality}</td>`;
-
-                // Collect all scores for this quality to detect shared values
-                const scores = analysis.songs.map(song => song.data[index]);
-
-                // Find which scores are shared (appear more than once)
-                const scoreCounts = {};
-                scores.forEach(score => {
-                    scoreCounts[score] = (scoreCounts[score] || 0) + 1;
-                });
-
-                // Assign highlight colors to shared scores
-                const highlightColors = ['rgba(139, 92, 246, 0.3)', 'rgba(14, 165, 233, 0.3)', 'rgba(16, 185, 129, 0.3)', 'rgba(236, 72, 153, 0.3)'];
-                const sharedScoreColors = {};
-                let colorIndex = 0;
-                Object.keys(scoreCounts).forEach(score => {
-                    if (scoreCounts[score] > 1) {
-                        sharedScoreColors[score] = highlightColors[colorIndex % highlightColors.length];
-                        colorIndex++;
-                    }
-                });
-
-                analysis.songs.forEach(song => {
-                    const score = song.data[index];
-                    const description = song.descriptions ? song.descriptions[index] : '';
-                    const bgColor = sharedScoreColors[score] || 'transparent';
-                    tableHTML += `<td class="score-cell" style="background-color: ${bgColor};">${score}/10</td>`;
-                    tableHTML += `<td style="background-color: ${bgColor};">${description}</td>`;
-                });
-                tableHTML += '</tr>';
-            });
-
-            tableHTML += '</tbody>';
-            table.innerHTML = tableHTML;
-        }
-    </script>
 </body>
 </html>
