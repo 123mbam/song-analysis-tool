@@ -727,6 +727,46 @@
             tableHTML += '</tbody>';
             table.innerHTML = tableHTML;
         }
+
+        // Function to fill typography pattern to match container height
+        function fillTypographyPattern() {
+            const typographyPattern = document.querySelector('.typography-pattern');
+            const typeLines = Array.from(typographyPattern.querySelectorAll('.type-line'));
+
+            if (typeLines.length === 0) return;
+
+            // Get container and content heights
+            const containerHeight = typographyPattern.offsetHeight;
+            const contentHeight = typographyPattern.scrollHeight;
+
+            // If content is shorter than container, duplicate lines to fill
+            if (contentHeight < containerHeight) {
+                const originalLines = typeLines.slice(); // Store original lines
+                let currentHeight = contentHeight;
+
+                while (currentHeight < containerHeight) {
+                    // Clone all original lines and append them
+                    originalLines.forEach(line => {
+                        const clone = line.cloneNode(true);
+                        typographyPattern.appendChild(clone);
+                    });
+                    currentHeight = typographyPattern.scrollHeight;
+                }
+            }
+        }
+
+        // Fill typography on page load
+        fillTypographyPattern();
+
+        // Refill when window resizes or content changes
+        window.addEventListener('resize', fillTypographyPattern);
+
+        // Also fill after chart is drawn
+        const originalDrawRadarChart = drawRadarChart;
+        drawRadarChart = function(analysis) {
+            originalDrawRadarChart(analysis);
+            setTimeout(fillTypographyPattern, 100); // Slight delay to ensure layout is complete
+        };
     </script>
 </body>
 </html>
